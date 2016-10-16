@@ -3,6 +3,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,14 +11,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class Utente {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id_utente;
+	private Long id_utente;
 	
 	private String nome;
 	private String cognome;
@@ -26,8 +30,9 @@ public class Utente {
 	@ElementCollection(fetch=FetchType.EAGER)
 	private Set<Libro> libri = new HashSet<Libro>(3);
 	
-	@ManyToOne
-	private Prestito prestito;
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="utenti",cascade=CascadeType.ALL)
+	@NotFound(action=NotFoundAction.IGNORE)
+	private Set<Prestito> prestiti=new HashSet<>();
 	
 	@ManyToMany
 	private Set<Biblioteca> biblioU = new HashSet<>();
@@ -46,11 +51,11 @@ public class Utente {
 		this.cf = cf;
 	}
 
-	public String getId_utente() {
+	public Long getId_utente() {
 		return id_utente;
 	}
 
-	public void setId_utente(String id_utente) {
+	public void setId_utente(Long id_utente) {
 		this.id_utente = id_utente;
 	}
 
@@ -86,12 +91,12 @@ public class Utente {
 		this.libri = libri;
 	}
 
-	public Prestito getPrestito() {
-		return prestito;
+	public Set<Prestito> getPrestiti() {
+		return prestiti;
 	}
 
-	public void setPrestito(Prestito prestito) {
-		this.prestito = prestito;
+	public void setPrestiti(Set<Prestito> prestiti) {
+		this.prestiti = prestiti;
 	}
 
 	public Set<Biblioteca> getBiblioU() {

@@ -3,19 +3,24 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class Libro {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id_libro;
+	private Long id_libro;
 	
 	private String titolo;
 	private String autore;
@@ -23,8 +28,9 @@ public class Libro {
 	private int copieTotali;
 	private int copieDisponibili;
 	
-	@ManyToOne
-	private Prestito prestito;
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="libri",cascade=CascadeType.ALL)
+	@NotFound(action=NotFoundAction.IGNORE)
+	private Set<Prestito> prestiti=new HashSet<>();
 	
 	@ManyToMany
 	private Set<Biblioteca> biblioL = new HashSet<>();
@@ -46,11 +52,11 @@ public class Libro {
 		this.copieDisponibili = copieDisponibili;
 	}
 
-	public String getId_libro() {
+	public Long getId_libro() {
 		return id_libro;
 	}
 
-	public void setId_libro(String id_libro) {
+	public void setId_libro(Long id_libro) {
 		this.id_libro = id_libro;
 	}
 
@@ -86,12 +92,12 @@ public class Libro {
 		this.copieDisponibili = copieDisponibili;
 	}
 
-	public Prestito getPrestito() {
-		return prestito;
+	public Set<Prestito> getPrestiti() {
+		return prestiti;
 	}
 
-	public void setPrestito(Prestito prestito) {
-		this.prestito = prestito;
+	public void setPrestito(Set<Prestito> prestiti) {
+		this.prestiti = prestiti;
 	}
 
 	public Set<Biblioteca> getBiblioL() {

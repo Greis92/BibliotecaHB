@@ -1,41 +1,31 @@
 package model;
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Prestito {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id_prestito;
+	private Long id_prestito;
 	
 	private Date dataInizioPrestito;
 	private Date dataRestituzionePrestito;
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="prestito",cascade=CascadeType.ALL)
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Set<Utente> utenti=new HashSet<>();
+	@ManyToOne
+	private Utente utenti;
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="prestito",cascade=CascadeType.ALL)
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Set<Libro> libri=new HashSet<>();
+	@ManyToOne
+	private Libro libri;
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="prestito",cascade=CascadeType.ALL)
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Set<Biblioteca> biblio=new HashSet<>();
+	@ManyToOne
+	private Biblioteca biblio;
 	
 	
 	public Prestito(){}
@@ -47,12 +37,12 @@ public class Prestito {
 	}
 
 
-	public String getId_prestito() {
+	public Long getId_prestito() {
 		return id_prestito;
 	}
 
 
-	public void setId_prestito(String id_prestito) {
+	public void setId_prestito(Long id_prestito) {
 		this.id_prestito = id_prestito;
 	}
 
@@ -77,32 +67,32 @@ public class Prestito {
 	}
 
 
-	public Set<Utente> getUtenti() {
+	public Utente getUtenti() {
 		return utenti;
 	}
 
 
-	public void setUtenti(Set<Utente> utenti) {
+	public void setUtenti(Utente utenti) {
 		this.utenti = utenti;
 	}
 
 
-	public Set<Libro> getLibri() {
+	public Libro getLibri() {
 		return libri;
 	}
 
 
-	public void setLibri(Set<Libro> libri) {
+	public void setLibri(Libro libri) {
 		this.libri = libri;
 	}
 
 
-	public Set<Biblioteca> getBiblio() {
+	public Biblioteca getBiblio() {
 		return biblio;
 	}
 
 
-	public void setBiblio(Set<Biblioteca> biblio) {
+	public void setBiblio(Biblioteca biblio) {
 		this.biblio = biblio;
 	}
 	
