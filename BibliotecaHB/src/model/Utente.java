@@ -18,28 +18,26 @@ import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class Utente {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_utente;
-	
+
 	private String nome;
 	private String cognome;
 	private String cf;
-	
-	@ElementCollection(fetch=FetchType.EAGER)
+
+	@ElementCollection(fetch = FetchType.EAGER)
 	private Set<Libro> libri = new HashSet<Libro>(3);
-	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="utenti",cascade=CascadeType.ALL)
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Set<Prestito> prestiti=new HashSet<>();
-	
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "utenti", cascade = CascadeType.ALL)
+	@NotFound(action = NotFoundAction.IGNORE)
+	private Set<Prestito> prestiti = new HashSet<>();
+
 	@ManyToMany
 	private Set<Biblioteca> biblioU = new HashSet<>();
-	
-	
-	
-	public Utente(){
+
+	public Utente() {
 		this.nome = "";
 		this.cognome = "";
 		this.cf = "";
@@ -106,7 +104,5 @@ public class Utente {
 	public void setBiblioU(Set<Biblioteca> biblioU) {
 		this.biblioU = biblioU;
 	}
-	
-	
-	
+
 }

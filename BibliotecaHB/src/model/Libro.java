@@ -17,27 +17,25 @@ import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class Libro {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_libro;
-	
+
 	private String titolo;
 	private String autore;
-	
+
 	private int copieTotali;
 	private int copieDisponibili;
-	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="libri",cascade=CascadeType.ALL)
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Set<Prestito> prestiti=new HashSet<>();
-	
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "libri", cascade = CascadeType.ALL)
+	@NotFound(action = NotFoundAction.IGNORE)
+	private Set<Prestito> prestiti = new HashSet<>();
+
 	@ManyToMany
 	private Set<Biblioteca> biblioL = new HashSet<>();
-	
-	
-	
-	public Libro(){
+
+	public Libro() {
 		this.titolo = "";
 		this.autore = "";
 		this.copieTotali = 0;
@@ -107,7 +105,5 @@ public class Libro {
 	public void setBiblioL(Set<Biblioteca> biblioL) {
 		this.biblioL = biblioL;
 	}
-	
-	
-	
+
 }

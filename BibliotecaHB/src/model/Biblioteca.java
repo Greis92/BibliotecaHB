@@ -17,26 +17,24 @@ import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class Biblioteca {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_biblioteca;
-	
+
 	private String nomeBiblioteca;
-	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="biblio",cascade=CascadeType.ALL)
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Set<Prestito> prestiti=new HashSet<>();
-	
-	@ManyToMany(mappedBy="biblioU",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private Set<Utente> utente = new HashSet<>();
-	
-	@ManyToMany(mappedBy="biblioL",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "biblio", cascade = CascadeType.ALL)
+	@NotFound(action = NotFoundAction.IGNORE)
+	private Set<Prestito> prestiti = new HashSet<>();
+
+	@ManyToMany(mappedBy = "biblioU", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Utente> utenti = new HashSet<>();
+
+	@ManyToMany(mappedBy = "biblioL", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Libro> libri = new HashSet<>();
-	
-	
-	
-	public Biblioteca(){
+
+	public Biblioteca() {
 		this.nomeBiblioteca = "";
 	}
 
@@ -68,12 +66,12 @@ public class Biblioteca {
 		this.prestiti = prestiti;
 	}
 
-	public Set<Utente> getUtente() {
-		return utente;
+	public Set<Utente> getUtenti() {
+		return utenti;
 	}
 
-	public void setUtente(Set<Utente> utente) {
-		this.utente = utente;
+	public void setUtente(Set<Utente> utenti) {
+		this.utenti = utenti;
 	}
 
 	public Set<Libro> getLibri() {
@@ -85,10 +83,15 @@ public class Biblioteca {
 	}
 
 	public void addLibro(Libro l) {
-		this.libri.add(l);	
+		this.libri.add(l);
 	}
-	
-	
-	
-	
+
+	public void addUtente(Utente u) {
+		this.utenti.add(u);
+	}
+
+	public void addPrestiti(Prestito p) {
+		this.prestiti.add(p);
+	}
+
 }
